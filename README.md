@@ -1,5 +1,5 @@
 <p align="center">
-  assets/logo.png
+  <img src = assets/logo.png>
 </p>
 
 <h1 align="center">ThermoGIS</h1>
