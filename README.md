@@ -10,11 +10,9 @@
 
 # ThermoGIS
 
-**ThermoGIS** is a web-based platform developed for the analysis and visualization of
-**thermal comfort indices** and their **spatial distribution** using geospatial data.
+**ThermoGIS** is a web-based platform developed for the analysis and visualization of **thermal comfort indices** and their **spatial distribution** using geospatial data.
 
-The application is designed for **urban climate studies**, **outdoor thermal comfort analysis**,
-and **decision support systems**, combining statistical analysis with GIS-based visualization.
+The application is designed for **urban climate studies**, **outdoor thermal comfort analysis**, and **decision support systems**, combining statistical analysis with GIS-based visualization.
 
 ---
 
@@ -43,8 +41,7 @@ ThermoGIS currently supports the following indices:
 - **Physiological Equivalent Temperature (PET)**  
   *(implemented using a stable, Streamlit-safe simplified formulation)*
 
-All indices are mapped to a **unified thermal stress classification system** to ensure
-visual and analytical consistency.
+All indices are mapped to a **unified thermal stress classification system** to ensure visual and analytical consistency.
 
 ---
 
@@ -64,12 +61,9 @@ visual and analytical consistency.
 
 ## 👤 Author
 
-I earned my **BSc** and **MSc** degrees in **Geomatic Engineering** from **Aksaray University**,  
-and my **PhD** in **Geodesy and Geoinformation Engineering** from **Kocaeli University**,  
-all from **Türkiye**.
+I earned my **BSc** and **MSc** degrees in **Geomatic Engineering** from **Aksaray University**, and my **PhD** in **Geodesy and Geoinformation Engineering** from **Kocaeli University**, all from **Türkiye**.
 
-Currently, I am working as a **Lecturer** in the  
-**Mapping and Cadastre Programme** at **Iskenderun Technical University**.
+Currently, I am working as a **Lecturer** in the **Mapping and Cadastre Programme** at **Iskenderun Technical University**.
 
 ### Research Interests
 
