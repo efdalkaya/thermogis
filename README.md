@@ -59,7 +59,7 @@ visual and analytical consistency.
 ---
 
 <p align="center">
-  assets/ek.png
+  <img src = "assets/ek.png" style="width:400px; height:400px;">
 </p>
 
 ## 👤 Author
