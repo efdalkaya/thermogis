@@ -150,7 +150,7 @@ with left:
     resolution = st.slider(
         "Grid Resolution (higher = more detail, slower)",
         min_value=100,
-        max_value=1000,
+        max_value=10000,
         value=500,
         step=50
     )

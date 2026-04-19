@@ -64,7 +64,7 @@ for key in ["result_df", "result_col", "selected_model"]:
         st.session_state[key] = None
 
 # ==================================================
-# COLOR SYSTEM (ALL INDICES)
+# SINGLE COLOR SYSTEM (ALL INDICES)
 # ==================================================
 CLASS_COLORS = {
     "No Discomfort": "#16a34a",
@@ -98,7 +98,7 @@ def style_class(val):
     return f"background-color:{color}; color:black; font-weight:600;"
 
 # ==================================================
-# CALCULATION FUNCTIONS
+# INDEX CALCULATION FUNCTIONS
 # ==================================================
 def heat_index_noaa(ta, rh):
     t = ta * 9 / 5 + 32
@@ -131,7 +131,7 @@ def pet_simplified(ta, rh, wind, met=1.2, clo=0.9):
     )
 
 # ==================================================
-# CLASSIFICATION
+# CLASSIFICATION FUNCTIONS
 # ==================================================
 def classify_heat_index(v):
     if v < 27: return "No Discomfort"
@@ -168,11 +168,13 @@ def classify_pet(v):
     elif v < 35: return "Hot Stress"
     else: return "Extreme Danger"
 
+# ==================================================
+# CLASS DISTRIBUTION PLOT
+# ==================================================
 def plot_class_distribution(df, class_col, class_colors):
     counts = df[class_col].value_counts()
 
     fig, ax = plt.subplots(figsize=(5, 4))
-
     bars = ax.bar(
         counts.index,
         counts.values,
@@ -181,15 +183,12 @@ def plot_class_distribution(df, class_col, class_colors):
 
     ax.set_title("Class Distribution")
     ax.set_ylabel("Count")
-    ax.set_xlabel("")
 
     ax.set_xticklabels(counts.index, rotation=45, ha="right")
 
-    # ✅ Add space above bars (important)
     max_count = counts.max()
     ax.set_ylim(0, max_count * 1.15)
 
-    # ✅ Add value labels slightly above bars
     for bar in bars:
         height = bar.get_height()
         ax.text(
@@ -198,7 +197,6 @@ def plot_class_distribution(df, class_col, class_colors):
             f"{int(height)}",
             ha="center",
             va="bottom",
-            fontsize=10
         )
 
     plt.tight_layout()
@@ -213,12 +211,9 @@ tab1, tab2 = st.tabs(["🔧 Analysis Setup", "📈 Results & Statistics"])
 # TAB 1 – ANALYSIS SETUP
 # ==================================================
 with tab1:
-
     left, right = st.columns([1, 2])
 
     with left:
-        st.subheader("📥 Data Input")
-
         uploaded = st.file_uploader("Upload CSV or Excel", ["csv", "xlsx"])
         if uploaded is None:
             st.stop()
@@ -244,7 +239,6 @@ with tab1:
 
         if st.button("✅ Run Thermal Analysis"):
 
-            # ---- CALCULATION PER MODEL (ALL DEFINED) ----
             if model == "Heat Index":
                 values = heat_index_noaa(df[ta_col], df[rh_col])
                 classes = values.apply(classify_heat_index)
@@ -277,10 +271,11 @@ with tab1:
             st.session_state.result_df = df_res
             st.session_state.result_col = col_name
             st.session_state.selected_model = model
+            
+            # USER info
+            st.success("✅ Thermal analysis completed successfully.")
 
-            st.success("✅ Analysis completed.")
 
-    # ✅ DATA PREVIEW GERİ GELDİ
     with right:
         st.subheader("📊 Data Preview")
         st.dataframe(df, use_container_width=True, height=520)
@@ -288,7 +283,6 @@ with tab1:
 # ==================================================
 # TAB 2 – RESULTS & STATISTICS
 # ==================================================
-
 with tab2:
 
     if st.session_state.result_df is None:
@@ -298,30 +292,15 @@ with tab2:
     res = st.session_state.result_df
     col = st.session_state.result_col
 
-    # ✅ EQUAL WIDTH COLUMNS
     left, right = st.columns([1, 1])
 
-    # -----------------------------
-    # LEFT: Calculated Indices
-    # -----------------------------
     with left:
         st.subheader("📊 Calculated Indices")
-
-        styled = (
-            res[[col, "Index_Class"]]
-            .style
-            .applymap(style_class, subset=["Index_Class"])
+        styled = res[[col, "Index_Class"]].style.map(
+            style_class, subset=["Index_Class"]
         )
+        st.dataframe(styled, use_container_width=True, height=420)
 
-        st.dataframe(
-            styled,
-            use_container_width=True,
-            height=420
-        )
-
-    # -----------------------------
-    # RIGHT: Statistics + Chart
-    # -----------------------------
     with right:
         st.subheader("📈 Statistical Summary")
 
@@ -346,24 +325,17 @@ with tab2:
         st.divider()
         st.subheader("📊 Class Distribution")
 
-        fig = plot_class_distribution(
-            res,
-            class_col="Index_Class",
-            class_colors=CLASS_COLORS
-        )
-
+        fig = plot_class_distribution(res, "Index_Class", CLASS_COLORS)
         st.pyplot(fig)
-        
+
         buf = io.BytesIO()
-        fig.savefig(buf, format="png", dpi=600, bbox_inches="tight")
+        fig.savefig(buf, format="png", dpi=200, bbox_inches="tight")
         buf.seek(0)
 
         st.download_button(
-            label="⬇️ Download Class Distribution Chart",
+            "⬇️ Download Class Distribution Chart",
             data=buf,
             file_name="class_distribution.png",
             mime="image/png",
             use_container_width=True
         )
-
-render_footer()
