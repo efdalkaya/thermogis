@@ -1,6 +1,6 @@
 
-streamlit
-pandas
+streamlit>=1.30
+pandas>=2.1
 numpy
 matplotlib
 scipy
@@ -9,3 +9,6 @@ shapely
 folium
 streamlit-folium
 rasterio
+pyproj
+jinja2
+openpyxl
