@@ -1,5 +1,5 @@
 <p align="center">
-  <img src = "assets/thermogis.png" style="width:400px; height:400px;">
+  <img src = "assets/thermogis.png" style="width:1000px; height:1000px;">
 </p>
 
 <h1 align="center">ThermoGIS</h1>
